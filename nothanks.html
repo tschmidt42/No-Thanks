@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+  
+
+  <style>
+    #container
+    {
+      height: 700px;
+      position: relative;
+      width: 1200px;
+    }
+    #gamecanvas
+    {
+      /* height: 100%;
+      width: 100%; */
+      border:2px solid black;
+      background-color: #87ceeb;
+    }
+    #controls
+    {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body onload="startGame()">
+
+  <div id="container">
+    <canvas id="gamecanvas" width="1200" height="700">
+    </canvas>
+
+    <menu id="controls">
+      <button onclick="cardTaken()">Take Card</button>
+      <button onclick="cardLeft()">Put Counter On Card</button>
+    </menu>
+  </div>
+  
+  <script src="nothanks.js"></script>
+</body>
+</html>
