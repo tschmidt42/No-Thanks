@@ -120,9 +120,9 @@ function cardLeft() {
 }
  
 
-// update visuals on cards and chips
+// update visuals on cards and counters
 function updateCanvas() {
-    // update active card and chips
+    // update active card and counters
     activeCardText.text = activeCard.toString();
     activeCountersText.text = "Counters: " + activeCounters.toString();
 
@@ -131,14 +131,22 @@ function updateCanvas() {
     stage.update();
 }
 
+// when game ends buttons shouldn't do anything and final scores should be displayed
 function gameEnd() {
+    let scores = Array();
+    for (let i = 0; i < playerCount; i++) {
+        scores[i] = score(i); 
+
+    // ***** display final scores here *****
+
     alert("Thanks for playing!");
 }
 
 // score: each card counts for it's value but runs are scored by the lowest value
-// remaining chips are worth negative points
-function score(cards, chips) {
-    let score = -1 * chips;
+// remaining counters are worth negative points
+function score(player) {
+    let cards = players[player][0]
+    let score = -1 * players[player][1];
     let prev = 0;
     for (let card in cards) {
         if (card - prev > 1) {
