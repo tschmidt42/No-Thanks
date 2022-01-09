@@ -4,18 +4,6 @@ TODO:
     flip animation
 **/
 
-/* var i = document.createElement('iframe');
-i.style.display = 'none';
-document.body.appendChild(i);
-window.console = i.contentWindow.console;
-i.parentNode.removeChild(i); */
-
-/*
-// set canvas size
-let canvasWidth = 1300;
-let canvasHeight = 750;
-*/
-
 // define card images
 let cardBack = new Image();
 cardBack.src = "cardBack.jpg";
@@ -33,12 +21,12 @@ let player;
 
 // create global variables
 let activeCard;
-let activeCounters;
+let activeCounters = 0;
 let deck = Array();
-let activeCardLabel;
 
 let gameCanvas = document.getElementById("gamecanvas");
 let activeCardText;
+let activeCountersText;
 let stage = new createjs.Stage('gamecanvas');
 
 
@@ -56,7 +44,6 @@ function startGame() {
 
     // initilize values
     activeCard = deck.pop();
-    console.log(activeCard);
     activeCounters = 0; 
     player = 0;
 
@@ -76,12 +63,18 @@ function startGame() {
     activeCardText.x = 640;
     activeCardText.y = 170;
     stage.addChild(activeCardText);
+
+    activeCountersText = new createjs.Text("Counters: " + activeCounters.toString(),
+        "24px sans-serif");
+    activeCountersText.x = 550;
+    activeCountersText.y = 350;
+    stage.addChild(activeCountersText);
+
     stage.update();
 
 }
 
 function cardTaken() {
-    alert("Card taken");
     // player takes card and counters on card
     let playerCards = players[player][0];
     // put new card in that players cards in order
@@ -116,7 +109,6 @@ function cardTaken() {
 }
 
 function cardLeft() {
-    alert("Card nottaken");
     // player puts counter on card
     players[player][1] -= 1;
     activeCounters += 1;
@@ -132,8 +124,7 @@ function cardLeft() {
 function updateCanvas() {
     // update active card and chips
     activeCardText.text = activeCard.toString();
-
-    // ***** put counters code here ********
+    activeCountersText.text = "Counters: " + activeCounters.toString();
 
     // update player cards
     // ****** put player cards code here *******
