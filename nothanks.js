@@ -1,5 +1,7 @@
 /**
 TODO:
+    order player cards
+    fix score
     support differnt player counts
     flip animation
 **/
@@ -83,7 +85,6 @@ function startGame() {
 function cardTaken() {
     // player takes card and counters on card
     let playerCards = players[player][0];
-    console.log("before: " + playerCards)
 
     // put new card in that players cards in order
     for (let i = 0; i < playerCards.length; i++) {
@@ -98,7 +99,6 @@ function cardTaken() {
     }
 
     players[player][0] = playerCards;
-    console.log("after: " + playerCards)
 
     // add counters on card to players personal supply
     players[player][1] += activeCounters;
@@ -162,14 +162,14 @@ function updateplayerCanvas() {
 
 // when game ends buttons shouldn't do anything and final scores should be displayed
 function gameEnd() {
-    let scores = Array();
+    //let scores = Array();
+    let str = "Final scores: \n";
     for (let i = 0; i < playerCount; i++) {
-        scores[i] = score(i);
+        //scores[i] = score(i);
+        str += "Player " + (i + 1) + ": " + score(i) + "\n";
     }
 
-    // ***** display final scores here *****
-    
-    alert("Thanks for playing!");
+    alert(str);
 }
 
 // score: each card counts for it's value but runs are scored by the lowest value
@@ -178,9 +178,10 @@ function score(player) {
     let cards = players[player][0]
     let score = -1 * players[player][1];
     let prev = 0;
-    for (let card in cards) {
+    for (let i in cards) {
+        let card = cards[i];
         if (card - prev > 1) {
-            score = score + card;
+            score += card;
         }
         prev = card;
     }
