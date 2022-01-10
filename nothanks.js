@@ -47,27 +47,33 @@ function startGame() {
     activeCounters = 0; 
     player = 0;
 
-    // set up canvas
+    // display deck
     let cardBackBitMap = new createjs.Bitmap(cardBack);
     stage.addChild(cardBackBitMap);
-    cardBackBitMap.x = 400;
-    cardBackBitMap.y = 150;
-    cardBackBitMap.scale = 0.1;
+    cardBackBitMap.x = gameCanvas.width / 40;
+    // cardBackBitMap.y = gameCanvas.height / 4;
+    cardBackBitMap.scaleX = (9 * gameCanvas.width) / (20 * cardBack.width);
+    cardBackBitMap.scaleY = gameCanvas.height / (cardBack.height);
 
+    // display active card face
     let activeCardBitMap = new createjs.Bitmap(cardFront);
     stage.addChild(activeCardBitMap);
-    activeCardBitMap.x = 600;
-    activeCardBitMap.y = 150;
+    activeCardBitMap.x = 21 * gameCanvas.width / 40;
+    //activeCardBitMap.y = gameCanvas.height / 4;
+    activeCardBitMap.scaleX = (9 * gameCanvas.width) / (20 * cardFront.width);
+    activeCardBitMap.scaleY = gameCanvas.height / cardFront.height;
     
+    // display active card value
     activeCardText = new createjs.Text(activeCard.toString(), "24px sans-serif");
-    activeCardText.x = 640;
-    activeCardText.y = 170;
+    activeCardText.x = 6 * gameCanvas.width / 9;
+    activeCardText.y = gameCanvas.height / 2;
     stage.addChild(activeCardText);
 
+    // display counters on active cards
     activeCountersText = new createjs.Text("Counters: " + activeCounters.toString(),
-        "24px sans-serif");
-    activeCountersText.x = 550;
-    activeCountersText.y = 350;
+        "12px sans-serif");
+    activeCountersText.x = 11 * gameCanvas.width / 20;
+    activeCountersText.y = 3 * gameCanvas.height / 4;
     stage.addChild(activeCountersText);
 
     stage.update();
@@ -135,10 +141,11 @@ function updateCanvas() {
 function gameEnd() {
     let scores = Array();
     for (let i = 0; i < playerCount; i++) {
-        scores[i] = score(i); 
+        scores[i] = score(i);
+    }
 
     // ***** display final scores here *****
-
+    
     alert("Thanks for playing!");
 }
 

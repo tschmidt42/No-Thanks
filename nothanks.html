@@ -10,15 +10,21 @@
       height: 700px;
       position: relative;
       width: 1200px;
+      border:2px solid black;
     }
     #gamecanvas
     {
-      /* height: 100%;
-      width: 100%; */
-      border:2px solid black;
+      height: 60%;
+      width: 55%;
       background-color: #87ceeb;
     }
-    #controls
+    #player1canvas
+    {
+      height: 40%;
+      width: 40%;
+      background-color: #87ceeb;
+    }
+    #turnoptions
     {
       bottom: 0;
       left: 0;
@@ -31,10 +37,13 @@
 <body onload="startGame()">
 
   <div id="container">
-    <canvas id="gamecanvas" width="1200" height="700">
+    <canvas id="gamecanvas">
     </canvas>
 
-    <menu id="controls">
+    <canvas id="player1canvas">
+    </canvas>
+
+    <menu id="turnoptions">
       <button onclick="cardTaken()">Take Card</button>
       <button onclick="cardLeft()">Put Counter On Card</button>
     </menu>
