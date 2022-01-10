@@ -40,7 +40,7 @@ function startGame() {
 
     for (let i = 0; i < 24; i++) {
         let randIdx = Math.floor(Math.random() * (cards.length - 1));
-        deck.push(cards.splice(randIdx, 1));
+        deck.push(cards.splice(randIdx, 1)[0]);
     }
 
     // initilize values
@@ -71,7 +71,7 @@ function startGame() {
     stage.addChild(activeCardText);
 
     // display counters on active cards
-    activeCountersText = new createjs.Text("Counters: " + activeCounters.toString(),
+    activeCountersText = new createjs.Text(`Counters: ${activeCounters.toString()}`,
         "12px sans-serif");
     activeCountersText.x = 11 * gameCanvas.width / 20;
     activeCountersText.y = 3 * gameCanvas.height / 4;
@@ -137,7 +137,7 @@ function cardLeft() {
 function updategameCanvas() {
     // update active card and counters
     activeCardText.text = activeCard.toString();
-    activeCountersText.text = "Counters: " + activeCounters.toString();
+    activeCountersText.text = `Counters: ${activeCounters.toString()}`;
     stage.update();
 }
 
@@ -151,7 +151,7 @@ function updateplayerCanvas() {
     
     const x = player * playerWidth + 10;
     let y = 10;
-    ctx.fillText("Player " + player.toString(), x, y);
+    ctx.fillText(`Player ${player.toString(), x, y}`);
     let playerCards = players[player][0];
     for (let i in playerCards) {
         y += 15
@@ -165,7 +165,7 @@ function gameEnd() {
     let str = "Final scores: \n";
     for (let i = 0; i < playerCount; i++) {
         //scores[i] = score(i);
-        str += "Player " + (i + 1) + ": " + score(i) + "\n";
+        str += `Player ${(i + 1)}: ${score(i)}\n`;
     }
 
     alert(str);
