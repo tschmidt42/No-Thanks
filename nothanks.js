@@ -1,6 +1,5 @@
 /**
 TODO:
-    fix score
     support differnt player counts
     flip animation
 **/
@@ -85,18 +84,22 @@ function cardTaken() {
     let playerCards = players[player][0];
 
     // put new card in that players cards in order
-    for (let i in playerCards) {
-        if (playerCards[i] > activeCard) {
-            playerCards.splice(i, 0, activeCard);
-            break;
-        } else if (i + 1 == playerCards.length) {
+    addCard: {
+        for (let i = 0; i < playerCards.length; i++) {
+            console.log(typeof playerCards[i], playerCards[i]);
+            if (playerCards[i] > activeCard) {
+                playerCards.splice(i, 0, activeCard);
+                break addCard;
+            } else if (i + 1 == playerCards.length) {
+                playerCards.push(activeCard);
+                break addCard;
+            }
+        }
+        // if player had no cards put new card in set
+        if (playerCards.length == 0) {
             playerCards.push(activeCard);
         }
-    }
-    // if player had no cards put new card in set
-    if (playerCards.length == 0) {
-        playerCards.push(activeCard);
-    }
+    } 
 
     players[player][0] = playerCards;
 
@@ -149,9 +152,10 @@ function updateplayerCanvas() {
     const playerWidth = playersCanvas.width / playerCount;
     ctx.clearRect(player * playerWidth, 0, (player + 1) * playerWidth, playersCanvas.height);
     
+    // only need to update the current player
     const x = player * playerWidth + 10;
     let y = 10;
-    ctx.fillText(`Player ${player.toString()}`, x, y);
+    ctx.fillText(`Player ${(player + 1).toString()}`, x, y);
     let playerCards = players[player][0];
     for (let i in playerCards) {
         y += 15
