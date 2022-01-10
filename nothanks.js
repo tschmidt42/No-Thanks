@@ -1,6 +1,5 @@
 /**
 TODO:
-    order player cards
     fix score
     support differnt player counts
     flip animation
@@ -31,7 +30,6 @@ let playersCanvas = document.getElementById("playerscanvas");
 let activeCardText;
 let activeCountersText;
 let stage = new createjs.Stage('gamecanvas');
-
 
 function startGame() {
     // create deck of 24 cards from cards numbered 3 through 35
@@ -87,10 +85,12 @@ function cardTaken() {
     let playerCards = players[player][0];
 
     // put new card in that players cards in order
-    for (let i = 0; i < playerCards.length; i++) {
-        if (playerCards[i] > activeCard || i + 1 == playerCards.length) {
+    for (let i in playerCards) {
+        if (playerCards[i] > activeCard) {
             playerCards.splice(i, 0, activeCard);
             break;
+        } else if (i + 1 == playerCards.length) {
+            playerCards.push(activeCard);
         }
     }
     // if player had no cards put new card in set
@@ -133,7 +133,6 @@ function cardLeft() {
     updategameCanvas();
 }
  
-
 // update visuals on active cards and counters
 function updategameCanvas() {
     // update active card and counters
