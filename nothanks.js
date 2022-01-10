@@ -25,6 +25,7 @@ let activeCounters = 0;
 let deck = Array();
 
 let gameCanvas = document.getElementById("gamecanvas");
+let playersCanvas = document.getElementById("playerscanvas");
 let activeCardText;
 let activeCountersText;
 let stage = new createjs.Stage('gamecanvas');
@@ -77,15 +78,16 @@ function startGame() {
     stage.addChild(activeCountersText);
 
     stage.update();
-
 }
 
 function cardTaken() {
     // player takes card and counters on card
     let playerCards = players[player][0];
+    console.log("before: " + playerCards)
+
     // put new card in that players cards in order
     for (let i = 0; i < playerCards.length; i++) {
-        if (playerCards[i] > activeCard) {
+        if (playerCards[i] > activeCard || i + 1 == playerCards.length) {
             playerCards.splice(i, 0, activeCard);
             break;
         }
@@ -96,6 +98,7 @@ function cardTaken() {
     }
 
     players[player][0] = playerCards;
+    console.log("after: " + playerCards)
 
     // add counters on card to players personal supply
     players[player][1] += activeCounters;
@@ -107,10 +110,14 @@ function cardTaken() {
     if (deck.length == 0) {
         gameEnd();
     } else {
+        // update player's cards display
+        updateplayerCanvas();
+        
         // next players turn
         player = (player + 1) % playerCount;
 
-        updateCanvas();
+        // update active cards + counters 
+        updategameCanvas();
     }
 }
 
@@ -120,21 +127,37 @@ function cardLeft() {
     activeCounters += 1;
 
     // next players turn
-    player = (player + 1) % playerCount;
-
-    updateCanvas();
+    player = (player + 1) % playerCount;   
+    
+    // show new counter on active card
+    updategameCanvas();
 }
  
 
-// update visuals on cards and counters
-function updateCanvas() {
+// update visuals on active cards and counters
+function updategameCanvas() {
     // update active card and counters
     activeCardText.text = activeCard.toString();
     activeCountersText.text = "Counters: " + activeCounters.toString();
-
-    // update player cards
-    // ****** put player cards code here *******
     stage.update();
+}
+
+//update visuals on which players have which cards
+function updateplayerCanvas() {
+    // update player cards
+    const ctx = playersCanvas.getContext("2d");
+    ctx.font = "12px sans-serif";
+    const playerWidth = playersCanvas.width / playerCount;
+    ctx.clearRect(player * playerWidth, 0, (player + 1) * playerWidth, playersCanvas.height);
+    
+    const x = player * playerWidth + 10;
+    let y = 10;
+    ctx.fillText("Player " + player.toString(), x, y);
+    let playerCards = players[player][0];
+    for (let i in playerCards) {
+        y += 15
+        ctx.fillText(playerCards[i].toString(), x, y)
+    }
 }
 
 // when game ends buttons shouldn't do anything and final scores should be displayed
