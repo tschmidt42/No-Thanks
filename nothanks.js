@@ -151,7 +151,7 @@ function updateplayerCanvas() {
     
     const x = player * playerWidth + 10;
     let y = 10;
-    ctx.fillText(`Player ${player.toString(), x, y}`);
+    ctx.fillText(`Player ${player.toString()}`, x, y);
     let playerCards = players[player][0];
     for (let i in playerCards) {
         y += 15
