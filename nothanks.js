@@ -31,6 +31,16 @@ let activeCountersText;
 let stage = new createjs.Stage('gamecanvas');
 
 function startGame() {
+    // explain rules 
+    let txt = "No Thanks is a card game in which players take turns either taking the face up" +
+     "card in the middle or putting a counter on it. When a card is taken a new one is flipped over." +
+     "There are 24 cards in the deck each which has a number between 3 and 35," +
+     "the game ends when this deck is exausted. \n" +
+     "The object of No Thanks is to have the least points at the end of the game." +
+     "Each card is worth the number value on it, but runs are only worth the lowest value." +
+     "Each counter is a negative point.";
+    alert(txt); 
+
     // create deck of 24 cards from cards numbered 3 through 35
     let cards = Array();
     for (let i = 3; i <= 35; i++) {
