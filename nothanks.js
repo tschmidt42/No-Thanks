@@ -26,8 +26,12 @@ let deck = Array();
 
 let gameCanvas = document.getElementById("gamecanvas");
 let playersCanvas = document.getElementById("playerscanvas");
+
 let activeCardText;
 let activeCountersText;
+let currPlayerText;
+let currPlayerCountersText;
+
 let stage = new createjs.Stage('gamecanvas');
 
 function startGame() {
@@ -58,33 +62,47 @@ function startGame() {
     player = 0;
 
     // display deck
+    const margin = gameCanvas.width /40
     let cardBackBitMap = new createjs.Bitmap(cardBack);
     stage.addChild(cardBackBitMap);
-    cardBackBitMap.x = gameCanvas.width / 40;
-    // cardBackBitMap.y = gameCanvas.height / 4;
+    cardBackBitMap.x = margin;
+    cardBackBitMap.y = 2 * gameCanvas.height / 5;
     cardBackBitMap.scaleX = (9 * gameCanvas.width) / (20 * cardBack.width);
-    cardBackBitMap.scaleY = gameCanvas.height / (cardBack.height);
+    cardBackBitMap.scaleY = 3 * gameCanvas.height / (5 * cardBack.height);
 
     // display active card face
     let activeCardBitMap = new createjs.Bitmap(cardFront);
     stage.addChild(activeCardBitMap);
-    activeCardBitMap.x = 21 * gameCanvas.width / 40;
-    //activeCardBitMap.y = gameCanvas.height / 4;
-    activeCardBitMap.scaleX = (9 * gameCanvas.width) / (20 * cardFront.width);
-    activeCardBitMap.scaleY = gameCanvas.height / cardFront.height;
+    activeCardBitMap.x = 21 * margin;
+    activeCardBitMap.y = 2 * gameCanvas.height / 5;
+    activeCardBitMap.scaleX = (18 * margin) / cardFront.width;
+    activeCardBitMap.scaleY = 3 * gameCanvas.height / (5 * cardFront.height);
     
     // display active card value
-    activeCardText = new createjs.Text(activeCard.toString(), "24px sans-serif");
+    activeCardText = new createjs.Text(activeCard, "24px sans-serif");
     activeCardText.x = 6 * gameCanvas.width / 9;
-    activeCardText.y = gameCanvas.height / 2;
+    activeCardText.y = 2 * gameCanvas.height / 3;
     stage.addChild(activeCardText);
 
     // display counters on active cards
-    activeCountersText = new createjs.Text(`Counters: ${activeCounters.toString()}`,
+    activeCountersText = new createjs.Text(`Counters: ${activeCounters}`,
         "12px sans-serif");
     activeCountersText.x = 11 * gameCanvas.width / 20;
-    activeCountersText.y = 3 * gameCanvas.height / 4;
+    activeCountersText.y = 5 * gameCanvas.height / 6;
     stage.addChild(activeCountersText);
+
+    // display current player
+    currPlayerText = new createjs.Text(`Player: ${player + 1}`, "14px sans-serif", "#F1F1F1");
+    currPlayerText.x = margin;
+    currPlayerText.y = gameCanvas.height / 20;
+    stage.addChild(currPlayerText);
+
+    // display current player's counters
+    currPlayerCountersText = new createjs.Text(`Current Player Counters: ${players[player][1]}`,
+        "14px sans-serif", "#F1F1F1");
+    currPlayerCountersText.x = margin;
+    currPlayerCountersText.y = gameCanvas.height / 6;
+    stage.addChild(currPlayerCountersText);
 
     stage.update();
 }
@@ -96,7 +114,6 @@ function cardTaken() {
     // put new card in that players cards in order
     addCard: {
         for (let i = 0; i < playerCards.length; i++) {
-            console.log(typeof playerCards[i], playerCards[i]);
             if (playerCards[i] > activeCard) {
                 playerCards.splice(i, 0, activeCard);
                 break addCard;
@@ -151,6 +168,8 @@ function updategameCanvas() {
     // update active card and counters
     activeCardText.text = activeCard.toString();
     activeCountersText.text = `Counters: ${activeCounters.toString()}`;
+    currPlayerText.text = `Player: ${player + 1}`;
+    currPlayerCountersText.text = `Current Player Counters: ${players[player][1]}`;
     stage.update();
 }
 
@@ -183,6 +202,7 @@ function gameEnd() {
     }
 
     alert(str);
+    window.close()
 }
 
 // score: each card counts for it's value but runs are scored by the lowest value
